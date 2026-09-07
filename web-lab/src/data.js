@@ -2,12 +2,16 @@
 // C1 初學者只改這裡，就能看到畫面熱更新，不需要碰 React 元件與動畫背景。
 
 export const brand = {
-  name: 'BOBA TIDE',
-  badge: 'CAMPUS BUBBLE TEA OPS',
-  tagline: '把訂單、備料、LINE 通知與交付驗收收進同一個手搖飲控制台。',
+  name: 'GYOZA WOOD',
+  badge: 'CAMPUS GYOZA OPS',
+  tagline: '把訂單、備料、LINE 通知與交付驗收收進同一個鍋貼店控制台。',
   description:
     '這不是一個展示型小網頁，而是一個會一路延伸到備料台、API、LINE OA、MCP 與個人技術紀錄的企業程式開發練習包。學生在同一個 repo 裡學會接手、規劃、修改、驗證與說明。',
   cta: '查看四堂課主線',
+  // 首頁主圖。把你的鍋貼照片放進 web-lab/public/images/，再把路徑填在這裡，
+  // 例如 '/images/my-gyoza.jpg'。留空字串就顯示預設插畫——不填也不會壞。
+  // 路徑要以 / 開頭，檔名建議用英文小寫。詳見 U1/STEP-02.md。
+  heroImage: '',
 };
 
 export const courseModules = [
@@ -58,9 +62,9 @@ export const tabs = [
   {
     id: 'system',
     label: '系統感',
-    title: '畫面要像真的手搖飲品牌後台，不像 AI 隨手拼的範本',
+    title: '畫面要像真的鍋貼店品牌後台，不像 AI 隨手拼的範本',
     body:
-      '首頁用手搖飲品牌情境建立代入感，控制台用真實營運欄位呈現品項、訂單、備料區水位、風險金額與下一步。所有畫面都要能對應到資料與驗收，不用空泛口號填版面。',
+      '首頁用鍋貼店品牌情境建立代入感，控制台用真實營運欄位呈現品項、訂單、備料區水位、風險金額與下一步。所有畫面都要能對應到資料與驗收，不用空泛口號填版面。',
   },
   {
     id: 'agent',
@@ -81,7 +85,7 @@ export const tabs = [
     label: '技術表達',
     title: '最後要能說明自己怎麼拆題、怎麼驗證、怎麼交付',
     body:
-      'C4 用 MCP/skills 做小型應用，再把手搖飲控制台、驗收截圖、技術筆記與踩坑整理成 Astro blog。重點不是炫技，而是讓媒合企業看得出學生有思考過。',
+      'C4 用 MCP/skills 做小型應用，再把鍋貼店控制台、驗收截圖、技術筆記與踩坑整理成 Astro blog。重點不是炫技，而是讓媒合企業看得出學生有思考過。',
   },
 ];
 

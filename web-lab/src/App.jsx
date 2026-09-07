@@ -1,14 +1,22 @@
 import { useState } from 'react';
 import { brand, courseModules, stats, workflow, tabs, checkpoints } from './data.js';
 import { Aurora, GradientText } from './uiEffects.jsx';
+import { GyozaPan, StageIcon } from './artwork.jsx';
 import ShopConsole from './ShopConsole.jsx';
 import OrderBoard from './OrderBoard.jsx';
 import Dashboard from './Dashboard.jsx';
 
+// 四堂課配四個製作階段:麵皮 → 包餡 → 煎製 → 出餐。
+// 對應課程主線(接手 → 開發 → 驗證 → 交付),也呼應訂單看板的四個站點。
+const moduleStage = { C1: 'wrapper', C2: 'fill', C3: 'sear', C4: 'serve' };
+
 function ModuleCard({ code, title, desc, output }) {
   return (
     <article className="module-card">
-      <span className="module-code">{code}</span>
+      <div className="module-card-head">
+        <span className="module-code">{code}</span>
+        <StageIcon stage={moduleStage[code]} />
+      </div>
       <h3>{title}</h3>
       <p>{desc}</p>
       <strong>{output}</strong>
@@ -25,6 +33,13 @@ function HomePage() {
       <header className="site-hero">
         <Aurora className="site-hero-aurora" />
         <div className="hero-overlay" />
+        {/* 首頁主圖。data.js 的 heroImage 有填就用你的照片,沒填就用預設插畫。
+            這是 U1 的第二個練習(見 U1/STEP-02.md),照片放在 web-lab/public/images/。 */}
+        {brand.heroImage ? (
+          <img className="hero-art" src={brand.heroImage} alt="" aria-hidden="true" />
+        ) : (
+          <GyozaPan />
+        )}
         <div className="site-hero-inner">
           <p className="eyebrow solid">AI Project Foundation Kit</p>
           <p className="brand-kicker">{brand.badge}</p>

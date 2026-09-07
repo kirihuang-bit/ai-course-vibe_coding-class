@@ -288,7 +288,7 @@ h2 { font-size: 30px; line-height: 1.25; margin-top: 8px; }
   .panel, .split, .checklist { padding: 20px; }
 }
 
-/* ── BOBA TIDE 首頁與 C2/C3 頁面 ───────────────── */
+/* ── GYOZA WOOD 首頁與 C2/C3 頁面 ───────────────── */
 .site-page { background: var(--bg); }
 .site-hero {
   position: relative;
@@ -318,6 +318,37 @@ h2 { font-size: 30px; line-height: 1.25; margin-top: 8px; }
   width: min(1120px, calc(100% - 40px));
   margin: 0 auto;
   padding: 72px 0 104px;
+}
+
+/* ── 首頁主圖(SVG 插畫,或 data.js 的 heroImage 換成的照片)─────
+   放在 .hero-overlay 之後,所以畫在遮罩「之上」;但 z-index 比
+   .site-hero-inner(2) 低,文字永遠壓在圖上面,不會被蓋住。
+   遮罩本身是左深右淺,右半邊本來就留白 —— 圖放右邊剛好補上。 */
+.hero-art {
+  position: absolute;
+  z-index: 1;
+  right: -2%;
+  /* 抬高到 hero-metrics(bottom:28px,約 110px 高)之上,鍋子前緣才不會被切掉 */
+  bottom: 152px;
+  width: min(50%, 600px);
+  height: auto;
+  max-height: 62%;
+  object-fit: contain;
+  object-position: right bottom;
+  pointer-events: none;
+  user-select: none;
+}
+/* 蒸氣:三道錯開時間的上升淡出 */
+.hero-steam path {
+  animation: steam-rise 4.5s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+.hero-steam .s2 { animation-delay: 1.5s; }
+.hero-steam .s3 { animation-delay: 3s; }
+@keyframes steam-rise {
+  0%   { opacity: 0; transform: translateY(10px) scaleY(0.9); }
+  35%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-26px) scaleY(1.15); }
 }
 .eyebrow.solid {
   display: inline-flex;
@@ -428,6 +459,19 @@ h2 { font-size: 30px; line-height: 1.25; margin-top: 8px; }
   display: grid;
   align-content: start;
   gap: 14px;
+}
+/* 課程卡頂端:左邊 C1-C4 徽章,右邊製作階段圖示 */
+.module-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.module-icon {
+  width: 46px;
+  height: 46px;
+  flex: none;
+  opacity: 0.9;
 }
 .module-code {
   display: inline-grid;
@@ -867,6 +911,16 @@ h2 { font-size: 30px; line-height: 1.25; margin-top: 8px; }
   .flow-visual,
   .flow-note div { grid-template-columns: 1fr; }
   .hero-metrics { position: relative; right: auto; bottom: auto; width: calc(100% - 40px); margin: -96px auto 28px; }
+  /* 960px 以下 hero-metrics 改成跟著文件流排,底部不再是空的。
+     主圖改掛到右上角當淡背景,才不會壓在數字面板上。 */
+  .hero-art {
+    top: 0;
+    bottom: auto;
+    right: -14%;
+    width: min(56%, 330px);
+    max-height: none;
+    opacity: 0.3;
+  }
 }
 
 @media (max-width: 620px) {
@@ -1330,6 +1384,7 @@ h2 { font-size: 30px; line-height: 1.25; margin-top: 8px; }
 @media (prefers-reduced-motion: reduce) {
   .aurora-blob { animation: none !important; }
   .gradient-text { animation: none !important; }
+  .hero-steam path { animation: none !important; }
 }
 
 /* SpotlightCard：滑鼠移動時跟隨的光暈 */

@@ -2,7 +2,7 @@
 
 ## 完成物
 
-- [ ] 一鍵啟動成功，瀏覽器看到 **BOBA TIDE** 與動態光暈背景
+- [ ] 一鍵啟動成功，瀏覽器看到 **GYOZA WOOD** 與動態光暈背景
 - [ ] 從 zip 解壓後，用 VS Code 開的是 `ai-project-foundation-kit/` 根目錄
 - [ ] 完成 `git init`
 - [ ] 完成 initial commit：`初始化 M11 專案包`
@@ -16,6 +16,10 @@
 - [ ] 建立過 `feature/u1-first-edit` 或老師指定的 feature branch
 - [ ] `git diff` 只動 `web-lab/src/data.js`
 - [ ] 完成第一次 commit，`git status` 乾淨
+- [ ] （練習二）說得出 `public/` 裡的檔案，網址就是「斜線 + 檔名」
+- [ ] （練習二）**說得出 `modified` 與 `untracked` 在 `git status` 裡的差別**
+- [ ] （練習二，選用）放過自己的照片到 `web-lab/public/images/`，並填好 `heroImage`，首頁主圖有換
+- [ ] （練習二，選用）照片與 `data.js` 一起 commit，`git status` 乾淨
 - [ ] 用 Claude Code 或 Codex review 最新 commit
 - [ ] 說得出 main / feature branch / diff / commit 的 Git flow
 - [ ] GitHub 上已建立自己的 repo
@@ -28,7 +32,7 @@
 
 | 驗收面向 | 這堂的標準 |
 |---|---|
-| 畫面 | BOBA TIDE 首頁正常，H1 能熱更新 |
+| 畫面 | GYOZA WOOD 首頁正常，H1 能熱更新 |
 | 輸出 | AI 專案摘要、`git status`、initial commit、GitHub repo URL |
 | diff | 只動 `data.js`，且 AI review 有指出檔案範圍 |
 | build | 這堂不強制 build，不跑 Pages 部署 |

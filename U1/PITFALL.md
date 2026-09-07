@@ -9,6 +9,13 @@
 | 5180 被占用 | Vite 會自動換 port；以終端機顯示的網址為準 |
 | 檔案樹是空的 | VS Code 要開 `ai-project-foundation-kit` 這一層 |
 | 改了 `data.js` 畫面沒變 | 確認有存檔、dev server 還在跑；不行就重新整理 |
+| 照片沒出現，還是原本的插畫 | `heroImage` 忘了填，或檔名跟實際檔案對不起來 |
+| 照片沒出現，F12 → Network 顯示 404 | 路徑開頭的 `/` 不能少：要寫 `/images/x.jpg`，不是 `images/x.jpg` |
+| 照片放進 `src/` 卻讀不到 | 要放 `web-lab/public/images/`。`public/` 裡的檔案網址就是 `/檔名`；`src/` 裡的要用 import 才會被打包 |
+| 檔名有中文或空格 | 改成英文小寫，例如 `my-gyoza.jpg`。中文與空格在網址裡會被編碼，很容易出錯 |
+| **本機看得到，之後部署到 GitHub Pages 卻壞掉** | **副檔名大小寫**：`.JPG` 和 `.jpg` 是兩個不同的檔名。Windows 不分大小寫所以本機正常，但 GitHub Pages 跑在 Linux 上會分。**一律用小寫** |
+| 照片超過 5MB，首頁變很慢 | 壓到 500KB 以下再放進去 |
+| push 之後別人打不開你的照片 | 你可能忘了 `git add` 那張圖。跑 `git status`，`Untracked files` 底下的檔案 Git 完全不認識 |
 | `git switch -c` 失敗 | 可能已經有同名分支；換老師指定分支名 |
 | `git commit` 說要設定 email | 照終端機提示設定 `user.name` / `user.email` |
 | `git push` 要求登入 | 先用瀏覽器登入 GitHub，或依 VS Code / Git 提示完成驗證 |
