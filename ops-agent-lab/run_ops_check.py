@@ -122,7 +122,11 @@ def ops_decider(observations: dict[str, object]) -> dict[str, object]:
     }
 
 
-def push_writer(observations: dict[str, object], decision: dict[str, object]) -> dict[str, object]:
+def push_writer(
+    observations: dict[str, object],
+    decision: dict[str, object],
+    report_date: date | None = None,
+) -> dict[str, object]:
     low_stock = sorted(
         observations["low_stock_items"],
         key=lambda item: (item.stock <= 0, item.risk_exposure, item.shortage),
@@ -142,7 +146,7 @@ def push_writer(observations: dict[str, object], decision: dict[str, object]) ->
         action_items.append("送出 LINE Flex 通知前，請主管人工確認補貨數量與收件對象。")
 
     return {
-        "report_date": date.today().isoformat(),
+        "report_date": (report_date or date.today()).isoformat(),
         "risk_level": decision["risk_level"],
         "total_revenue": decision["risk_exposure"],
         "anomaly_count": decision["anomaly_count"],
@@ -161,11 +165,11 @@ def push_writer(observations: dict[str, object], decision: dict[str, object]) ->
     }
 
 
-def build_report(inventory_path: Path) -> dict[str, object]:
+def build_report(inventory_path: Path, report_date: date | None = None) -> dict[str, object]:
     items = load_inventory(inventory_path)
     observations = data_checker(items)
     decision = ops_decider(observations)
-    return push_writer(observations, decision)
+    return push_writer(observations, decision, report_date)
 
 
 def main() -> None:
@@ -173,9 +177,18 @@ def main() -> None:
     parser.add_argument("--inventory", type=Path, default=DEFAULT_INVENTORY)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--write-report", action="store_true", help="write JSON to data-lab/report.json")
+    # 預設用今天(報表本來就該是今天產的)。教材包要固定成同一天時,才用這個參數重現基準檔:
+    #   python ops-agent-lab/run_ops_check.py --write-report --report-date 2026-07-06
+    parser.add_argument(
+        "--report-date",
+        type=date.fromisoformat,
+        default=None,
+        metavar="YYYY-MM-DD",
+        help="指定 report_date;不給就用今天",
+    )
     args = parser.parse_args()
 
-    report = build_report(args.inventory)
+    report = build_report(args.inventory, args.report_date)
     text = json.dumps(report, ensure_ascii=False, indent=2)
 
     if args.write_report:

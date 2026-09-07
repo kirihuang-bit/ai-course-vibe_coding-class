@@ -2,13 +2,13 @@
 // 由 vite.config.js 的 /api/orders 系列端點使用;只活在 npm run dev 的伺服端記憶體,
 // 不進前端 bundle、不寫任何檔案、不碰 token。
 //
-// 它做的事:讓 BOBA TIDE「營業起來」——
+// 它做的事:讓 GYOZA WOOD「營業起來」——
 //   訂單持續進來 → 沿 待製作→製作中→待取餐→已取餐 前進 → 製作時扣原料庫存
 //   → 庫存低於安全量(或被盤點成負數)→ 警示出現 → 推播中心跳出「庫存警示」建議。
 // 可控:start / pause / reset;在場訂單數有上限;種子化偽隨機,每次 reset 流程相似。
 // 狀態枚舉與欄位語言完全沿用 shopData.js(U2 的 C2-HOLE 依賴 status !== '已取餐',不可改詞)。
 
-import { drinkMenuItems } from './src/shopData.js';
+import { menuItems } from './src/shopData.js';
 
 // ── 種子化偽隨機(mulberry32):同一個種子跑出同一串數字,課堂示範可重現 ──
 function mulberry32(seed) {
@@ -22,16 +22,25 @@ function mulberry32(seed) {
   };
 }
 
-// 菜單池:每杯飲料用到哪些原料(sku 對應 shopData.drinkMenuItems),製作時各扣 1。
+// 菜單池:商品與配方沿用「AI excel 課程」的商品主檔(P001-P006)與商品配方 BOM。
+// uses 是這道商品用到的原料 sku(對應 shopData.menuItems),製作時各扣 1。
+//
+// 與 excel BOM 的兩處差異,都是刻意的:
+// 1. BOM 有「每份用量」(例如麵皮 10 張)與「僅外帶才計入」的規則,這裡簡化成
+//    「各扣 1、不分通路」——模擬引擎的重點是讓警示會亮,不是做成本會計。
+// 2. 醬料包(M012)是我們自己加進三道鍋貼的。excel BOM 沒有列它,但鍋貼附醬料包
+//    才符合現實;不加的話 M012 在看板上永遠停在 500,是唯一不會動的一列。
+//    湯品與飲品不附醬料包,所以不加。
 const MENU = [
-  { name: '黑糖珍珠鮮奶', price: 65, uses: ['BT-P01', 'BT-S01', 'BT-C01'] },
-  { name: '波霸鮮奶茶', price: 70, uses: ['BT-P02', 'BT-S01', 'BT-C01'] },
-  { name: '無糖綠茶', price: 45, uses: ['BT-S02', 'BT-C01'] },
-  { name: '珍珠綠茶', price: 55, uses: ['BT-P01', 'BT-S02', 'BT-C01'] },
-  { name: '厚鮮奶波霸', price: 75, uses: ['BT-P02', 'BT-S01', 'BT-C02'] },
+  { name: '招牌鍋貼(10顆)', price: 70, uses: ['M001', 'M002', 'M003', 'M009', 'M012'] },
+  { name: '韭菜鍋貼(10顆)', price: 70, uses: ['M001', 'M002', 'M004', 'M009', 'M012'] },
+  { name: '玉米鍋貼(10顆)', price: 80, uses: ['M001', 'M002', 'M005', 'M009', 'M012'] },
+  { name: '酸辣湯', price: 35, uses: ['M006', 'M010'] },
+  { name: '豆漿', price: 25, uses: ['M007', 'M011'] },
+  { name: '紅茶', price: 25, uses: ['M008', 'M011'] },
 ];
 
-const CUSTOMERS = ['陳同學', '林小姐', '王先生', '校園咖啡社', '吳教練', '游泳隊', '黃老師', '劉阿姨'];
+const CUSTOMERS = ['潘海伶', '馮川翔', '錢阿儂', '高崧登', '明立熙', '麥老闆', '吳教練', '游泳隊', '校園排球隊', '劉阿姨'];
 const CHANNELS = ['LINE OA', '外送平台', '櫃台', 'LINE OA']; // LINE OA 出現率調高,推播情境比較常見
 
 const MAX_ACTIVE_ORDERS = 12;
@@ -63,11 +72,11 @@ function freshState() {
     orders: [],
     doneCount: 0,
     revenue: 0,
-    // 庫存以 shopData.drinkMenuItems 為種子,深拷貝成伺服端活狀態。
-    // 注意:shopData.js 有幾項(如波霸)原本就寫死庫存 0,那是 U2 靜態教材的示範值,
+    // 庫存以 shopData.menuItems 為種子,深拷貝成伺服端活狀態。
+    // 注意:shopData.js 有幾項(如韭菜)原本就寫死庫存 0,那是 U2 靜態教材的示範值,
     // 不動它;但「營業中」是持續消耗的即時模擬,起始庫存拉到安全量之上,
     // 讓警示是「開店後真的被訂單吃光」才出現,不是一開店就已經缺貨。
-    inventory: drinkMenuItems.map((item) => ({
+    inventory: menuItems.map((item) => ({
       sku: item.sku,
       product: item.product,
       zone: item.zone,
@@ -121,12 +130,12 @@ function makeOrder() {
 
   state.counter += 1;
   return {
-    id: `BT-${todayStamp()}-${String(state.counter).padStart(3, '0')}`,
+    id: `GW-${todayStamp()}-${String(state.counter).padStart(3, '0')}`,
     customer: pick(CUSTOMERS),
     channel,
     status: '待製作',
     priority: amount >= 200 ? 'high' : channel === 'LINE OA' ? 'medium' : 'low',
-    zone: firstInv ? firstInv.zone : '吧台區',
+    zone: firstInv ? firstInv.zone : '煎台區',
     amount,
     eta: etaFromNow(15 + Math.floor(state.rng() * 10)),
     items,

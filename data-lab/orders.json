@@ -1,10 +1,10 @@
 {
-  "order_id": "BT-20260706-018",
-  "customer": "陳同學",
+  "order_id": "GW-20260706-018",
+  "customer": "潘海伶",
   "channel": "外送平台",
   "status": "待製作",
-  "amount": 130,
+  "amount": 140,
   "items": [
-    { "name": "黑糖珍珠鮮奶", "qty": 2, "price": 65 }
+    { "name": "招牌鍋貼(10顆)", "qty": 2, "price": 70 }
   ]
 }
