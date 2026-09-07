@@ -11,7 +11,7 @@
 - Windows：雙擊 `start-m11.bat`
 - macOS：雙擊 `start-m11.command`
 
-**你應該看到**：瀏覽器打開 <http://localhost:5180>，首頁是 **BOBA TIDE**，背景有會動的漸層光暈效果。
+**你應該看到**：瀏覽器打開 <http://localhost:5180>，首頁是 **GYOZA WOOD**，背景有會動的漸層光暈效果。
 
 如果 5180 被占用，Vite 會在終端機顯示另一個網址。以終端機顯示的網址為準。
 

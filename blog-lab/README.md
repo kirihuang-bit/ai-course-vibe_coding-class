@@ -1,6 +1,6 @@
 # Blog Lab
 
-這是 U4 使用的 Astro 技術紀錄 starter。用途不是做一個漂亮空殼，而是把前面完成的 BOBA TIDE 備料控制台整理成可以對企業說明的案例文章。
+這是 U4 使用的 Astro 技術紀錄 starter。用途不是做一個漂亮空殼，而是把前面完成的 GYOZA WOOD 備料控制台整理成可以對企業說明的案例文章。
 
 ## 本機預覽
 
@@ -10,14 +10,14 @@ npm install
 npm run dev
 ```
 
-打開終端機顯示的網址，應該看到首頁與一篇 BOBA TIDE 案例草稿。
+打開終端機顯示的網址，應該看到首頁與一篇 GYOZA WOOD 案例草稿。
 
 ## 寫文章
 
 主要文章在：
 
 ```text
-src/content/blog/nova-warehouse-case.md
+src/content/blog/gyoza-wood-case.md
 ```
 
 請把課堂截圖放到：

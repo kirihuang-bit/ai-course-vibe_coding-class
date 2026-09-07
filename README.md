@@ -2,7 +2,7 @@
 
 這是 M11/U11「**AI 驅動開發流程**」的練習專案。整門課使用同一個企業案例：
 
-> **BOBA TIDE 手搖飲備料控制台** — 從接手 repo、規劃小範圍開發、完成備料控制台功能、理解訂單可視化與 LINE OA Flex 推播，到最後用 MCP/skills 與 Astro blog 整理技術成果。
+> **GYOZA WOOD 餃木鍋貼備料控制台** — 從接手 repo、規劃小範圍開發、完成備料控制台功能、理解訂單可視化與 LINE OA Flex 推播，到最後用 MCP/skills 與 Astro blog 整理技術成果。
 
 主線只有一條：
 
@@ -22,7 +22,7 @@ ai-project-foundation-kit/
   start-m11.bat      # Windows 一鍵啟動
   start-m11.command  # macOS 一鍵啟動
   U1/ U2/ U3/ U4/    # 每堂:STEP-*.md / PROMPT-CARD.md / ACCEPTANCE.md / PITFALL.md
-  web-lab/           # React/Vite 作品本體:BOBA TIDE 首頁、備料控制台、訂單可視化、LINE 推播中心
+  web-lab/           # React/Vite 作品本體:GYOZA WOOD 首頁、備料控制台、訂單可視化、LINE 推播中心
   blog-lab/          # Astro 技術紀錄 starter:文章、截圖、GitHub Pages 部署
   data-lab/          # report.json / orders.json:LINE Flex 與資料合約練習
   line-lab/          # LINE OA Flex 通知腳本(mock 優先，真送雙重確認)

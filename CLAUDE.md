@@ -4,7 +4,7 @@
 
 ## 這個專案
 
-教學用「BOBA TIDE 手搖飲備料控制台 + LINE OA Flex 推播 + ops agent 自動化」。
+教學用「GYOZA WOOD 餃木鍋貼備料控制台 + LINE OA Flex 推播 + ops agent 自動化」。
 啟動：`cd web-lab && npm run dev`（port 5180）。build：`npm run build`。
 U3「訂單看板」按「開始營業」後,`web-lab/orderSim.js`(老師檔,dev-only)在伺服端跑訂單/庫存模擬,前端每 3 秒 `GET /api/orders` 輪詢;沒開 dev 後端時自動退回 `shopData.js` 的靜態範例,不會白屏。
 推播三條路(即時訂單、庫存警示、營運異常),走同一條後端 guard 階梯：

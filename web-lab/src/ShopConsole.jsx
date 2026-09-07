@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { shop, drinkMenuItems, drinkOrders, zones } from './shopData.js';
+import { shop, menuItems, sampleOrders, zones } from './shopData.js';
 import {
   buildActionQueue,
   classifyIngredient,
@@ -53,9 +53,9 @@ function ActionItem({ item }) {
 }
 
 export default function ShopConsole() {
-  const summary = useMemo(() => summarizeShop(drinkMenuItems, drinkOrders), []);
-  const lowStockItems = useMemo(() => getLowStockIngredients(drinkMenuItems), []);
-  const actionQueue = useMemo(() => buildActionQueue(drinkMenuItems, drinkOrders), []);
+  const summary = useMemo(() => summarizeShop(menuItems, sampleOrders), []);
+  const lowStockItems = useMemo(() => getLowStockIngredients(menuItems), []);
+  const actionQueue = useMemo(() => buildActionQueue(menuItems, sampleOrders), []);
 
   return (
     <main className="admin-shell">
@@ -145,7 +145,7 @@ export default function ShopConsole() {
               </tr>
             </thead>
             <tbody>
-              {drinkMenuItems.map((item) => (
+              {menuItems.map((item) => (
                 <IngredientRow item={item} key={item.sku} />
               ))}
             </tbody>

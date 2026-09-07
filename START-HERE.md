@@ -2,7 +2,7 @@
 
 這份資料夾就是你四堂課的練習材料。整門課只做一個作品：
 
-> **BOBA TIDE 手搖飲備料控制台**<br>
+> **GYOZA WOOD 餃木鍋貼備料控制台**<br>
 > 從接手 repo、Git 工作流、AI coding agent 規劃與驗收，到備料控制台、訂單可視化、LINE OA Flex、MCP/skills 與技術 blog。
 
 ## 你現在在哪條流水線
@@ -53,7 +53,7 @@ npm run dev
 
 你應該看到四個頁面：
 
-1. **品牌入口**：BOBA TIDE 首頁。
+1. **品牌入口**：GYOZA WOOD 首頁。
 2. **備料控制台**：C2 會修改的後台管理系統。
 3. **訂單可視化**：C3 會用來理解 component、CSS、資料狀態與 three.js 動畫。
 4. **LINE 推播中心**：C3 會走完載入、檢查、Flex 預覽、人工審核、mock 推播。

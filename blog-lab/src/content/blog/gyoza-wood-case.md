@@ -1,12 +1,12 @@
 ---
-title: 我如何用 AI coding agent 接手並交付 BOBA TIDE 備料控制台
+title: 我如何用 AI coding agent 接手並交付 GYOZA WOOD 備料控制台
 date: 2026-07-05
 summary: 從需求拆解、備料控制台規則、LINE Flex mock、DevTools 驗收到 GitHub Pages 部署，整理一個可對企業說明的技術案例。
 ---
 
 ## 1. 問題背景
 
-BOBA TIDE 的營運人員需要快速知道三件事：
+GYOZA WOOD 的營運人員需要快速知道三件事：
 
 - 哪些原料低於安全庫存。
 - 哪些訂單因缺料或高優先級需要處理。
@@ -53,7 +53,7 @@ token 不能出現在前端，也不能 commit。課堂主線使用 mock，看�
 
 請把你的截圖補在這裡：
 
-- BOBA TIDE 首頁。
+- GYOZA WOOD 首頁。
 - 備料控制台 action queue。
 - 訂單看板。
 - LINE Flex preview。

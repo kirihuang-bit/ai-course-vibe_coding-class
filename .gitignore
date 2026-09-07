@@ -6,3 +6,10 @@ __pycache__/
 .env
 .codex
 .claude
+
+# AI coding agent 的 skill 安裝產物，不是教材內容
+.agents/
+skills-lock.json
+
+# 根目錄沒有 package.json，這個 lock 檔是 skill 安裝的副產物
+/package-lock.json

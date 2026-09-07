@@ -7,7 +7,7 @@
 本專案已經提供 [`../blog-lab/`](../blog-lab/) Astro blog starter。你要新增或改寫一篇文章，主題不是「我做了一個 AI 專案」，而是：
 
 ```text
-我如何用 AI coding agent 接手並交付一個 BOBA TIDE 手搖飲控制台系統
+我如何用 AI coding agent 接手並交付一個 GYOZA WOOD 鍋貼店控制台系統
 ```
 
 文章至少包含：
@@ -19,6 +19,6 @@
 5. 驗收證據：build、mock 推播、DevTools console/Network、diff。
 6. 下一步：如果給企業實戰題，你會怎麼估範圍與風險。
 
-Blog 可以放連結回你的 BOBA TIDE 系統 demo，或放截圖與 GitHub repo 連結。
+Blog 可以放連結回你的 GYOZA WOOD 系統 demo，或放截圖與 GitHub repo 連結。
 
 → 下一步：`STEP-04-blog-deploy.md`，本機預覽 blog，設定 GitHub Pages，部署公開網址。

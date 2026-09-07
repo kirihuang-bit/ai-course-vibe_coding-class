@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import { drinkOrders } from './shopData.js';
+import { sampleOrders } from './shopData.js';
 
 const statusColor = {
   待製作: '#38bdf8',
@@ -69,7 +69,7 @@ export default function OrderBoardCanvas() {
     scene.add(floor);
 
     const laneMaterial = new THREE.MeshStandardMaterial({ color: '#d8e2ea', roughness: 0.7 });
-    const stations = ['接單', '製作', '搖製', '取餐'];
+    const stations = ['接單', '包餡', '煎製', '取餐'];
     const stationX = [-8, -2.7, 2.7, 8];
     stationX.forEach((x, index) => {
       const plate = new THREE.Mesh(new THREE.BoxGeometry(3.1, 0.08, 5.4), laneMaterial);
@@ -81,20 +81,25 @@ export default function OrderBoardCanvas() {
       scene.add(label);
     });
 
-    const cups = drinkOrders.map((order, index) => {
+    const dumplings = sampleOrders.map((order, index) => {
       const color = statusColor[order.status] || '#64748b';
       const group = new THREE.Group();
+      // 鍋貼:膠囊體橫躺再壓扁。CapsuleGeometry 長軸原本是 Y,
+      // rotation.z 轉 90 度後長軸變成世界的 X(沿著產線方向躺著);
+      // scale 在旋轉前作用於本地座標,所以壓 x 才是壓「高度」。
       const body = new THREE.Mesh(
-        new THREE.CylinderGeometry(0.55, 0.45, 0.9, 16),
+        new THREE.CapsuleGeometry(0.34, 0.55, 4, 16),
         new THREE.MeshStandardMaterial({ color, roughness: 0.52, metalness: 0.04 }),
       );
+      body.rotation.z = Math.PI / 2;
+      body.scale.set(0.7, 1, 1);
       body.castShadow = true;
       group.add(body);
       const label = makeTextSprite(order.id.slice(-3), '#111827');
-      label.position.set(0, 1.05, 0);
+      label.position.set(0, 0.7, 0);
       label.scale.set(1.45, 0.5, 1);
       group.add(label);
-      group.position.set(-8 + index * 1.2, 0.55, -1.8 + index * 1.2);
+      group.position.set(-8 + index * 1.2, 0.3, -1.8 + index * 1.2);
       scene.add(group);
       return { group, order, offset: index * 1.7 };
     });
@@ -110,12 +115,12 @@ export default function OrderBoardCanvas() {
 
     function frame() {
       const t = clock.elapsedTime;
-      cups.forEach(({ group, order, offset }, index) => {
+      dumplings.forEach(({ group, order, offset }, index) => {
         const blocked = order.status === '缺料等待';
         const progress = blocked ? 0.08 : ((Math.sin(t * 0.42 + offset) + 1) / 2) * 0.9;
         group.position.x = -8 + progress * 16;
         group.position.z = -1.8 + index * 1.2;
-        group.position.y = 0.55 + Math.sin(t * 2 + offset) * 0.04;
+        group.position.y = 0.3 + Math.sin(t * 2 + offset) * 0.04;
         group.rotation.y = blocked ? Math.sin(t * 3) * 0.08 : Math.sin(t * 0.7 + offset) * 0.18;
       });
       renderer.render(scene, camera);

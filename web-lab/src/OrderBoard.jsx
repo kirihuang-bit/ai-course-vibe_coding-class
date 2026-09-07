@@ -4,7 +4,7 @@
 // 對照:webhook 是反方向(平台主動推過來);我們這裡是自己去拉。
 // 這裡沒有任何 LINE token;推播都在「LINE 推播中心」人審後才送。
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { drinkOrders } from './shopData.js';
+import { sampleOrders } from './shopData.js';
 import { formatCurrency } from './shopLogic.js';
 import OrderBoardCanvas from './OrderBoardCanvas.jsx';
 import { TiltedCard, GlareHover, CountUp } from './uiEffects.jsx';
@@ -28,7 +28,7 @@ function OrderLane({ order, isNew }) {
         <span>{order.customer}</span>
       </div>
       <div className="flow-track" aria-label={`${order.id} fulfillment progress`}>
-        {['接單', '製作', '搖製', '取餐'].map((label, index) => (
+        {['接單', '包餡', '煎製', '取餐'].map((label, index) => (
           <div className={`flow-dot ${index <= step ? 'done' : ''}`} key={label}>
             <span>{label}</span>
           </div>
@@ -146,7 +146,7 @@ export default function OrderBoard() {
   }
 
   const live = !apiDown && snapshot;
-  const orders = live ? snapshot.orders : drinkOrders;
+  const orders = live ? snapshot.orders : sampleOrders;
   const running = live ? snapshot.running : false;
   const alerts = live ? snapshot.alerts : null;
   const alertCount = alerts ? alerts.lineWaitingCount + alerts.lowStock.length + alerts.invalidStock.length : 0;
@@ -243,7 +243,7 @@ export default function OrderBoard() {
           <p className="eyebrow solid">live map</p>
           <h3>把訂單狀態變成看得懂的路徑</h3>
           <p>
-            紅色杯代表缺料等待,藍色/綠色/橘色杯代表不同履約狀態。
+            紅色鍋貼代表缺料等待,藍色/綠色/橘色鍋貼代表不同履約狀態。
             資料每 3 秒更新一次,畫面就跟著資料走 —— 資料驅動畫面。
           </p>
         </div>

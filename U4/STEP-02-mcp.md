@@ -8,7 +8,7 @@ MCP 可以理解成「讓 AI 使用外部工具的安全接口」。今天只裝
 
 | MCP | 解決什麼問題 | 本課用法 |
 |---|---|---|
-| Chrome DevTools MCP | AI 能自己看 localhost、console、Network、截圖 | 驗收 BOBA TIDE 首頁、訂單看板、LINE 推播中心 |
+| Chrome DevTools MCP | AI 能自己看 localhost、console、Network、截圖 | 驗收 GYOZA WOOD 首頁、訂單看板、LINE 推播中心 |
 | Context7 MCP | 查最新官方文件，降低過時 API 風險 | 查 Vite / Astro / three.js / LINE SDK 類文件 |
 | Codebase Memory MCP | 讓 AI 建立專案地圖，回答檔案關係 | 查 `ShopConsole.jsx`、`shopLogic.js`、`Dashboard.jsx` 的關係 |
 

@@ -1,6 +1,6 @@
 # U4 · STEP 04 ｜ Astro Blog 與 GitHub Pages 部署
 
-> **這一步完成物**：一篇可以公開展示的 BOBA TIDE 技術紀錄，以及一個 GitHub Pages 公開網址。
+> **這一步完成物**：一篇可以公開展示的 GYOZA WOOD 技術紀錄，以及一個 GitHub Pages 公開網址。
 
 ## 1. 打開 blog-lab
 
@@ -12,8 +12,8 @@ npm run dev
 
 打開終端機顯示的本機網址。你應該看到：
 
-- `BOBA TIDE 技術紀錄` 首頁
-- 一篇 `我如何用 AI coding agent 接手並交付 BOBA TIDE 備料控制台` 文章
+- `GYOZA WOOD 技術紀錄` 首頁
+- 一篇 `我如何用 AI coding agent 接手並交付 GYOZA WOOD 備料控制台` 文章
 
 這是老師預留的範例草稿，不是你的最終稿——內容是通用示範寫法，這一步要把文章改寫成你自己實際做的事，不是照抄範例文字。
 
@@ -22,10 +22,10 @@ npm run dev
 打開：
 
 ```text
-blog-lab/src/content/blog/nova-warehouse-case.md
+blog-lab/src/content/blog/gyoza-wood-case.md
 ```
 
-（檔名還是舊的沒關係，這堂不要求連檔名一起改；重點是內文要換成你自己的實作細節與截圖證據。）
+（重點是內文要換成你自己的實作細節與截圖證據，不是照抄範例。）
 
 文章至少要補上：
 
@@ -54,7 +54,7 @@ blog-lab/public/images/
 
 建議至少放：
 
-- BOBA TIDE 首頁
+- GYOZA WOOD 首頁
 - 備料控制台 action queue
 - 訂單看板
 - LINE Flex preview
