@@ -21,6 +21,7 @@ ai-project-foundation-kit/
   START-HERE.md      # 學生入口:四堂課地圖 + DoD + 一鍵啟動
   start-m11.bat      # Windows 一鍵啟動
   start-m11.command  # macOS 一鍵啟動
+  U0/                # 先修:看懂檔案結構與命名慣例(約 30 分鐘,只有 README + 3 個 STEP)
   U1/ U2/ U3/ U4/    # 每堂:STEP-*.md / PROMPT-CARD.md / ACCEPTANCE.md / PITFALL.md
   web-lab/           # React/Vite 作品本體:GYOZA WOOD 首頁、備料控制台、訂單可視化、LINE 推播中心
   blog-lab/          # Astro 技術紀錄 starter:文章、截圖、GitHub Pages 部署

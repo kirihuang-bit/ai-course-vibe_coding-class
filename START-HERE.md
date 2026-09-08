@@ -15,6 +15,7 @@
 
 | 堂 | 你會推進到哪裡 | 打開哪個資料夾 |
 |---|---|---|
+| U0 | 看懂這包東西的檔案結構、工程師的命名慣例，先有地圖再動手（約 30 分鐘） | [`U0/`](./U0/) |
 | U1 | 從 zip 建本機 repo，專案跑起來，看懂 VS Code / Git / Codex / Claude Code，並推上 GitHub | [`U1/`](./U1/) |
 | U2 | 用 AGENTS.md、CLAUDE.md、Plan Mode 管住 AI，完成備料控制台小範圍修改 | [`U2/`](./U2/) |
 | U3 | 看懂訂單資料如何驅動畫面，並用 LINE OA Flex 完成 mock 推播 | [`U3/`](./U3/) |
@@ -23,10 +24,13 @@
 這門課預設你拿到的是 zip，不是 `git clone`。第一次上課不要從整包亂找檔案。請先打開：
 
 ```text
-U1/README.md
+U0/README.md
 ```
 
-它會告訴你 C1 要照哪個順序做，第一步會先把 zip 變成自己的本機 Git repo。每個資料夾都有：`README.md` 或 `STEP-*.md`、`PROMPT-CARD.md`、`ACCEPTANCE.md`、`PITFALL.md`。
+U0 只有三步、約 30 分鐘，會教你怎麼看懂這包裡的資料夾與副檔名——**先有地圖，再開始動手**。
+走完 U0 再打開 `U1/README.md`，第一步會把 zip 變成自己的本機 Git repo。
+
+每個資料夾都有：`README.md` 或 `STEP-*.md`、`PROMPT-CARD.md`、`ACCEPTANCE.md`、`PITFALL.md`。
 
 ## 完成的定義（DoD）
 
