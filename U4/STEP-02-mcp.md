@@ -27,9 +27,10 @@ npm run dev
 請用 Chrome DevTools MCP 打開 http://localhost:5180。
 檢查：
 1. console 有沒有 error
-2. 品牌入口是否有動態背景
-3. 訂單看板是否有 canvas 動畫
-4. LINE 推播中心是否能看到兩個推播範本
+2. 品牌入口是否有動態光暈背景與右側的煎台鍋貼插畫
+3. 分頁圖示(favicon)是否是一顆鍋貼
+4. 訂單看板是否有 canvas 動畫
+5. LINE 推播中心是否能看到三個推播範本
 請回報驗收結果與一張截圖。
 ```
 

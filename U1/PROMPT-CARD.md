@@ -30,7 +30,7 @@ U1 主要靠手，不靠 AI 亂改。AI 的用途是：讀專案、解釋流程�
 
 請固定輸出：
 Changed Files：這筆 commit 改了哪些檔案
-Scope Check：是否只動 U1 允許的 web-lab/src/data.js
+Scope Check：是否只動 U1 允許的 web-lab/src/data.js 與 web-lab/public/images/
 Behavior Check：畫面上應該看到什麼變化
 Risk：最可能出錯的是什麼
 Next Step：下一步我應該做什麼

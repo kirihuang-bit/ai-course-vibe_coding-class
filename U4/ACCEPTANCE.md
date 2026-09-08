@@ -8,7 +8,7 @@
 
 ## MCP
 
-- [ ] Chrome DevTools MCP：驗收過 console error、動態背景、canvas 動畫、推播範本，截圖只是附帶證據；失敗則用人工 F12 保底
+- [ ] Chrome DevTools MCP：驗收過 console error、首頁插畫與 favicon、canvas 動畫、三個推播範本，截圖只是附帶證據；失敗則用人工 F12 保底
 - [ ] Context7 MCP：查過一次最新文件，答案有來源
 - [ ] Codebase Memory MCP：回答過專案檔案關係問題，也問過一次「改這裡會影響哪裡」
 - [ ] 說得出 MCP 權限三問：能讀什麼、能不能寫、會不會碰正式資料
