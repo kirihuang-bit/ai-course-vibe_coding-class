@@ -10,6 +10,10 @@
 | build 失敗 | 先看錯誤檔案與行數，不要叫 AI 重構 |
 | reviewer 一直 PASS | 把需求、允許檔案、`git diff` 都貼給它重新檢查 |
 | 對話變亂 | `/compact`；還是亂就 `/clear` 後重貼 planner 卡 |
+| （STEP 03）三個版本看起來都對 | **對，畫面本來就一樣**。這正是那題要你發現的事——只能看它怎麼算，不能看畫面 |
+| （STEP 03）分不出 B 錯在哪 | B 少了 `'已取餐'` 這個條件。把「任務要求的條件」一條一條對回 code |
+| （STEP 03）貼了壞卡，AI 卻自己拒絕了 | 這是好結果。請它說出是哪一份守則擋的，你還是要自己寫一次拉回範圍的回覆 |
+| （STEP 03）想直接自己刪掉 AI 多做的部分 | 不要。範圍是你定的，改回來該由它做——你一動手就變成幫它收尾 |
 | （加映）裝 Claude HUD 看不到 `/claude-hud:setup` | 先跑 README 裡的 `/reload-plugins` |
 | （加映）Windows 顯示沒有 JavaScript runtime | 先安裝 Node.js LTS，裝完重開 Claude Code |
 

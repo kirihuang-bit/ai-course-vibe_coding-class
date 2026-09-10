@@ -38,3 +38,7 @@
 | diff | 只動 `data.js`（＋練習二的 `public/images/`），且 AI review 有指出檔案範圍 |
 | build | 這堂不強制 build，不跑 Pages 部署 |
 | human review | 你親眼看過畫面與 diff |
+
+---
+
+→ C1 全部勾完了，下一堂從 [`../U2/README.md`](../U2/README.md) 開始。

@@ -13,6 +13,14 @@
 - [ ] `git diff` 只動允許檔案
 - [ ] reviewer 回 PASS 或指出可修正 BLOCK
 - [ ] 完成 commit
+- [ ] 備料控制台 action queue 已截圖存進 `blog-lab/public/images/`（U4 要用）
+
+## 判斷力（STEP 03）
+
+- [ ] 說得出**為什麼「畫面正常」不能當驗收證據**
+- [ ] 三個版本裡指得出哪個可放行，並說得出另外兩個各錯在哪
+- [ ] 貼過動過手腳的 planner 卡，**自己寫過一次拉回範圍的回覆**
+- [ ] 幫同學 review 過一次，給出 PASS 或 BLOCK
 
 ## DoD 對照
 
@@ -30,4 +38,4 @@
 - [ ] 用 `@agent-beginner-ai-project-workflow` 呼叫過一次
 - [ ] （選用）Claude HUD 已安裝
 
-詳見 [`STEP-03-subagent.md`](./STEP-03-subagent.md)。
+詳見 [`STEP-04-subagent.md`](./STEP-04-subagent.md)。
