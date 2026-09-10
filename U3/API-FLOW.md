@@ -1,42 +1,100 @@
-# U3 · API / webhook / token / mock-vs-real 圖解
+# U3 · 資料到底怎麼走：輪詢、推播、token、webhook
 
-這份圖解處理兩件事：訂單看板的資料怎麼「活」起來，以及按下「推播 LINE Flex」時，資料到底怎麼走。
+這份不是要你一次讀完。**它分成三段，各自接在你剛做過的事後面。**
 
-## 0. 看板怎麼「活」起來：輪詢（polling）
+## 0. 這份怎麼用
+
+| 段落 | 什麼時候讀 | 你那時候剛做過什麼 |
+|---|---|---|
+| **§1–2** 三個方向、看板怎麼活起來 | STEP-01 做完 | 剛在 Network 看過每 3 秒一次的請求 |
+| **§3** 按下推播之後 | STEP-02 §1 做完 | 剛按完五顆按鈕，看到 `[mock]` |
+| **§4–5** token 邊界、webhook | STEP-02 §4 做完 | 剛用 DevTools 看過推播那筆請求 |
+
+**每一段最後都有一個「現在去看」**，請真的照做。
+這些概念用讀的很抽象，但**在畫面上都看得到**。
+
+---
+
+## 1. 先搞清楚三個方向
+
+這一整堂會出現三種「資料在跑」的情況。它們最大的差別是——**誰先開口**。
+
+| 你會看到 | 誰先開口 | 在鍋貼店裡就是 |
+|---|---|---|
+| **輪詢 polling** | 前端一直問後端 | **外場每 3 秒跑去廚房窗口看一眼**：好了沒？好了沒？ |
+| **推播 push** | 我們主動送出去給 LINE | **店裡打電話給客人**：你的餐好了 |
+| **webhook** | LINE 主動送進來給我們 | **客人打電話進店裡**：我要改單 |
+
+> **推播和 webhook 是同一支電話的兩個方向。**
+> 一個是我們打出去，一個是別人打進來。
+>
+> 記住這件事，後面就不會搞混——**很多人卡住是因為以為它們是同一件事。**
+
+今天你會親眼看到前兩種。webhook 今天不做，但你要知道它存在、知道方向。
+
+---
+
+## 2. 看板怎麼「活」起來：輪詢
+
+按下「開始營業」之後，訂單為什麼會自己跑？因為前端一直在問：
 
 ```text
 Browser / React（訂單看板）
   |
-  | 每 3 秒一次 GET /api/orders
+  | 每 3 秒一次 GET /api/orders     ← 這就是你在 Network 看到的那一整排
   v
-Vite dev middleware
+Vite dev middleware               ← 本機的「後端」，跟著 npm run dev 一起開的
   |
-  | 呼叫 web-lab/orderSim.js（伺服端模擬引擎）
+  | 呼叫 web-lab/orderSim.js       ← 老師寫的模擬引擎:訂單怎麼進來、庫存怎麼扣
   v
 回傳 JSON：{ orders, inventory, alerts, ... }
   |
   v
-Browser 重新畫看板
+Browser 重新畫看板                 ← 所以你看到數字在跳
 ```
 
-這是「拉」（pull）：前端主動問。方向跟第 3 節的 webhook 相反。`orderSim.js` 只活在 `npm run dev` 的伺服端記憶體，沒有 dev 後端時，前端會自動退回 `shopData.js` 的靜態範例。
+**這是「拉」（pull）：前端主動問，後端被動答。**
+後端不會自己找上門——它只是在那裡等著被問。
 
-## 1. 課堂主線：mock send
+> **為什麼是 3 秒？**
+> 太快會一直打擾後端，太慢畫面看起來就卡卡的。3 秒是這門課挑的折衷值。
+
+**沒開 `npm run dev` 的時候會怎樣？**
+`orderSim.js` 只活在 dev 伺服器的記憶體裡。所以在 `npm run build/preview` 底下，
+`/api/orders` 會 404，前端就自動退回 `shopData.js` 的靜態範例——
+**畫面不會白屏，但也不會動。這不算壞掉。**
+
+### 🔍 現在去看
+
+F12 → Network → 看那一整排 `orders` 請求。
+
+- 它們是不是**每 3 秒出現一筆**？
+- 點開任一筆的 Response，裡面是不是一大包 JSON？
+- 按「暫停」之後，那排請求**還在繼續嗎**？
+
+（最後一題自己觀察就好，沒有標準答案要背。）
+
+---
+
+## 3. 按下「推播 LINE Flex」之後：mock send
+
+這是課堂主線。你按下第五顆按鈕之後，資料這樣走：
 
 ```text
 Browser / React
   |
-  | POST /api/send-line-flex
-  | payload: Flex Message JSON
+  | POST /api/send-line-flex        ← 注意是 POST,不是 GET:你在「送東西出去」
+  | payload: Flex Message JSON      ← 那張卡片的完整內容
   v
-Vite dev middleware
+Vite dev middleware                 ← 一樣是本機後端
   |
   | 呼叫 line-lab/sendLineAlert.js
-  | 讀取 line-lab/.env
+  | 讀取 line-lab/.env              ← token 如果有,只有這裡讀得到
   v
 LINE sender script
   |
-  | LINE_REAL_SEND 不是 1
+  | 檢查 LINE_REAL_SEND 是不是 1
+  | 不是 1 → 停在這裡,不往外送      ← ⭐ 主線就停在這一步
   v
 Mock result
   |
@@ -45,19 +103,102 @@ Mock result
 Browser 顯示推播結果
 ```
 
-主線驗收看到 `[mock]` 就過關。這代表流程跑完了，而且沒有真的碰 LINE API。
+**看到 `[mock]` 就是過關。** 它代表整條路都走通了，而且**沒有真的碰到 LINE**。
 
-## 2. 真送 LINE：只做進階示範
+> **這是「假送」的價值**：流程有沒有問題，你完整驗過了；
+> 但就算中間有錯，也不會有任何一個真人收到奇怪的訊息。
+>
+> `mock` 這個字之後你在哪都會遇到——**先用假的跑通，確定沒問題才接真的。**
+
+### 🔍 現在去看
+
+回到你剛剛按過推播的畫面，對照上面這張圖：
+
+- 你按的按鈕，是圖上的**哪一格**？（最上面那格）
+- `[mock]` 那行字，是圖上的**哪一格**回傳的？（倒數第二格）
+- 中間那些格子你都沒看到——**因為它們都在後端跑，瀏覽器看不到。**
+
+---
+
+## 4. token 為什麼不會外洩
+
+這是 U3 最重要的一節。
+
+**問題**：要送 LINE 訊息，一定要有 token（等於你 LINE 帳號的鑰匙）。
+那 token 放哪裡？
+
+**最直覺但最錯的做法**是放在前端——因為那樣任何人按 F12 都看得到。
+**任何人。** 網頁的前端程式碼是公開的，沒有例外。
+
+所以這個專案的做法是：
 
 ```text
-Browser / React
+前端（瀏覽器）              後端（你的電腦）
+─────────────────          ──────────────────
+只送兩樣東西:               讀 line-lab/.env
+  template（哪個範本）       拿到 token
+  reviewed（人審過了沒）     真正去打 LINE
+                      
+完全不知道 token 長怎樣  ←── 這條界線就是重點
+```
+
+**前端永遠不直接呼叫 `https://api.line.me`。** 要打也是後端去打。
+
+> 還記得 U0 講過 `.env` 嗎？**這就是那件事的實戰版。**
+> 密碼不進 Git、不進前端——**兩件事是同一個道理：不能讓看不該看的人看到。**
+
+### 🔍 現在去看（這一題是這堂課最好驗的一題）
+
+F12 → Network → **用搜尋功能找 `line.me`**。
+
+> **你應該什麼都找不到。**
+>
+> 找不到 ＝ 瀏覽器從頭到尾沒有直接連過 LINE ＝ **token 邊界是好的**。
+>
+> 如果你真的找到了 `api.line.me` 從瀏覽器直接出去——那就是出事了，
+> 代表 token 被放到前端了。（這個專案不會，但你以後看別人的專案要會查。）
+
+**「搜不到」本身就是證據。** 這是你今天能拿出來的最硬的一個驗收。
+
+---
+
+## 5. webhook：相反的方向
+
+推播是「我們送出去」。webhook 是「**LINE 把事情送回來給我們**」。
+
+```text
+客人在 LINE 上傳訊息給你的官方帳號
   |
-  | POST /api/send-line-flex
   v
+LINE Platform
+  |
+  | HTTPS POST 一個事件通知          ← LINE 主動打進來,我們沒有問它
+  v
+你的 bot server / n8n / Cloudflare Worker
+  |
+  v
+依事件內容決定要不要回覆、要不要寫進資料表
+```
+
+對照 §1 那張表：**這就是「客人打電話進店裡」。**
+
+> **今天不做這一段。** 要做 webhook 得先有一台外面連得到的伺服器，
+> 那是另一堂課的範圍。
+>
+> **這一節你只要記住方向**：推播是出去，webhook 是進來。
+> 面試或跟工程師討論時，講錯方向會很尷尬——記住這一件事就夠了。
+
+---
+
+## 6. 真送 LINE（進階示範，不是主線）
+
+有 LINE OA 的同學才會走到這裡。條件全滿足時，流程會多走最後一段：
+
+```text
 Local backend / Vite middleware
   |
   | 讀 line-lab/.env
-  | LINE_REAL_SEND=1
+  | LINE_REAL_SEND=1               ← 三個條件缺一不可
   | LINE_CHANNEL_ACCESS_TOKEN=...
   | LINE_TARGET_ID=...
   v
@@ -65,57 +206,32 @@ LINE Messaging API
   |
   | POST https://api.line.me/v2/bot/message/push
   v
-LINE OA 收到 Flex Message
+LINE OA 真的收到 Flex Message
 ```
 
-前端永遠不直接呼叫 `https://api.line.me`，也不會拿到 token。
+**注意這段是從後端出去的**，不是從瀏覽器。§4 那條界線在真送的時候一樣成立。
 
-## 3. webhook 是相反方向
+---
 
-推播是「我們送訊息出去」。webhook 是「LINE 把事件送回來」。
-
-```text
-使用者傳訊息給 LINE OA
-  |
-  v
-LINE Platform
-  |
-  | HTTPS POST webhook event
-  v
-你的 bot server / n8n webhook / Cloudflare Worker
-  |
-  v
-依事件內容決定要不要回覆或寫入資料表
-```
-
-本課 C3 主線不要求學生建 webhook server；只要知道方向與責任邊界。
-
-## 4. 五個名詞
-
-| 名詞 | 在本課的意思 | 學生要會說什麼 |
-|---|---|---|
-| API | 前端與後端約定好的呼叫入口 | 看板每 3 秒打 `/api/orders`；按推播時打 `/api/send-line-flex` |
-| payload | 要送出去的結構化資料 | Flex Message 是 JSON，不是隨便一段文字 |
-| token | 呼叫外部平台的密鑰 | 只能在 `.env`，不能進前端、不能 commit |
-| env var | 不放進程式碼的環境設定 | `LINE_REAL_SEND` 控制 mock 或真送 |
-| webhook | 外部平台主動打回來的事件通知 | LINE 使用者傳訊息時，LINE 會 POST 到 webhook URL |
-
-## 5. mock-vs-real 決策表
+## 7. 什麼時候是假送、什麼時候是真送
 
 | 狀態 | `LINE_REAL_SEND` | token | 結果 | 課堂定位 |
 |---|---:|---|---|---|
-| 預設 | 未設定或不是 `1` | 不需要 | 回 `[mock]` | 主線 |
-| 真送準備不足 | `1` | 缺 token 或 target | 擋下或報錯 | 排錯示範 |
-| 真送 | `1` | 有 token 與 target | 呼叫 LINE API | 教師 demo / 進階 |
+| 預設 | 沒設定，或不是 `1` | 不需要 | 回 `[mock]` | **主線，你要走的** |
+| 準備不足 | `1` | 缺 token 或 target | 擋下或報錯 | 排錯示範 |
+| 真送 | `1` | 兩個都有 | 真的呼叫 LINE API | 教師 demo / 進階 |
 
-## 6. DevTools 驗收
+**沒有 LINE OA 完全不影響過關。**
 
-按 F12 → Network → 重新按一次推播。你要看到：
+---
 
-- Request URL 是 `/api/send-line-flex`
-- Method 是 `POST`
-- Payload 是 Flex Message JSON
-- Response 有 `[mock]` 或 LINE API 結果
-- Network 裡沒有前端直接呼叫 `api.line.me`
+## 8. 這份出現的名詞
 
-如果看到 `api.line.me` 從 browser 直接出去，代表 token 邊界錯了。
+| 名詞 | 意思 | 你要能說出什麼 |
+|---|---|---|
+| **API** | 前後端講好的呼叫入口 | 就是那些 `/api/...` 開頭的網址 |
+| **payload** | 送出去的那包結構化資料 | Flex Message 是 JSON，不是一段文字 |
+| **token** | 呼叫外部平台的鑰匙 | 只能在 `.env`，不進前端、不進 Git |
+| **env var** | 不寫進程式碼的環境設定 | `LINE_REAL_SEND` 決定假送還真送 |
+| **webhook** | 外面主動打進來的事件通知 | 方向跟推播**相反** |
+| **GET / POST** | 兩種請求方式 | 大致是「去拿」和「送出去」的差別 |

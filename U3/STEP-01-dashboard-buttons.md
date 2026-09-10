@@ -77,4 +77,18 @@ GET /api/orders
 載入資料 → 檢查資料合約 → Flex 視覺預覽 → 人工審核 → mock 推播
 ```
 
-→ 下一步：`STEP-02-hitl-review.md`，理解 API、webhook、token 與人工審核。
+## 6. 順手截兩張圖（U4 會用到）
+
+畫面還開著的時候，截兩張存到 `blog-lab/public/images/`：
+
+| 截什麼 | 建議檔名 |
+|---|---|
+| 訂單看板（開始營業、訂單在跑的狀態） | `order-board.png` |
+| 備料水位裡韭菜變成「需要補貨」那一列 | `low-stock.png` |
+
+檔名一律**英文小寫**。U4 寫技術紀錄時要用，現在順手兩秒，那時候就不用重跑一次。
+
+→ **先讀 [`API-FLOW.md`](./API-FLOW.md) 的 §1–2**（三個方向、看板怎麼活起來）。
+只有那兩節，五分鐘。你剛剛在 Network 看過的那一整排請求，那兩節就是在解釋它。
+
+→ 讀完再打開 [`STEP-02-hitl-review.md`](./STEP-02-hitl-review.md)。
