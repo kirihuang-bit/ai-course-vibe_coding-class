@@ -40,7 +40,7 @@ blog-lab/src/content/blog/gyoza-wood-case.md
 
 ## 3. 放截圖
 
-把截圖放到：
+截圖都放在：
 
 ```text
 blog-lab/public/images/
@@ -52,15 +52,25 @@ blog-lab/public/images/
 ![備料控制台 action queue](/images/shop-console.png)
 ```
 
-建議至少放：
+**先去那個資料夾看一下——你在 U2、U3 應該已經收了五張。**
+
+| 截圖 | 什麼時候收的 | 建議檔名 |
+|---|---|---|
+| 備料控制台 action queue | U2 STEP-02 | `shop-console.png` |
+| 訂單看板 | U3 STEP-01 | `order-board.png` |
+| 韭菜「需要補貨」那一列 | U3 STEP-01 | `low-stock.png` |
+| LINE Flex 預覽 | U3 STEP-02 | `line-flex-preview.png` |
+| DevTools 的 `POST /api/send-line-flex` | U3 STEP-02 | `api-network.png` |
+
+**今天只需要再補三張**（都是你等一下就會做到的事，不用回頭重跑）：
 
 - GYOZA WOOD 首頁
-- 備料控制台 action queue
-- 訂單看板
-- LINE Flex preview
-- DevTools Network 的 `/api/send-line-flex`
-- `npm run build` 成功
-- GitHub Actions / Pages 部署成功
+- `npm run build` 成功的終端機畫面（第 4 節就會跑）
+- GitHub Actions 部署成功（第 5 節就會做）
+
+> **少了哪一張？** 那代表 U2 或 U3 當時沒截。
+> 補的方法是重新啟動 `npm run dev` 回到那個畫面——
+> 會花掉你十幾分鐘，所以**下次記得在現場收證據**。
 
 ## 4. 本機 build
 
