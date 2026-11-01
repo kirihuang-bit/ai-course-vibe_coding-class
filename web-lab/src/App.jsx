@@ -10,6 +10,10 @@ import Dashboard from './Dashboard.jsx';
 // 對應課程主線(接手 → 開發 → 驗證 → 交付),也呼應訂單看板的四個站點。
 const moduleStage = { C1: 'wrapper', C2: 'fill', C3: 'sear', C4: 'serve' };
 
+// 部署到 GitHub Pages 時網站在子路徑底下(例如 /repo/web-lab/),
+// 以 / 開頭的路徑要接上 BASE_URL 才找得到 public/ 裡的檔案。本機 dev 時 BASE_URL 就是 '/'。
+const withBase = (path) => (path.startsWith('/') ? import.meta.env.BASE_URL + path.slice(1) : path);
+
 function ModuleCard({ code, title, desc, output }) {
   return (
     <article className="module-card">
@@ -36,7 +40,7 @@ function HomePage() {
         {/* 首頁主圖。data.js 的 heroImage 有填就用你的照片,沒填就用預設插畫。
             這是 U1 的第二個練習(見 U1/STEP-02.md),照片放在 web-lab/public/images/。 */}
         {brand.heroImage ? (
-          <img className="hero-art" src={brand.heroImage} alt="" aria-hidden="true" />
+          <img className="hero-art" src={withBase(brand.heroImage)} alt="" aria-hidden="true" />
         ) : (
           <GyozaPan />
         )}

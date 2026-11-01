@@ -121,6 +121,8 @@ function lineFlexApi() {
 
 // 這是網頁專案的設定檔。你今天不用改它。
 export default defineConfig({
+  // 部署到 GitHub Pages 時由 workflow 傳入子路徑(見 .github/workflows/deploy-blog.yml);本機維持 '/'。
+  base: process.env.BASE_PATH ?? '/',
   plugins: [react(), orderFeedApi(), lineFlexApi()],
   build: {
     chunkSizeWarningLimit: 900,
